@@ -209,7 +209,7 @@ export default function PipelineSection() {
                   }}
                 />
 
-                {/* 4 colour-cycling packets */}
+                {/* 4 colour-cycling packets — transform-based travel, no left positioning */}
                 {[0, 0.5, 1, 1.5].map((offset) => (
                   <span
                     key={offset}
@@ -218,7 +218,7 @@ export default function PipelineSection() {
                     style={{
                       position: 'absolute',
                       top: '50%',
-                      transform: 'translateY(-50%)',
+                      left: 0,
                       width: 10,
                       height: 10,
                       borderRadius: '50%',
@@ -278,9 +278,11 @@ export default function PipelineSection() {
                   className={`bar-fill bar-fill-${i + 1}`}
                   style={{
                     height: '100%',
+                    width: '100%',
                     borderRadius: 99,
                     background: 'linear-gradient(90deg, var(--forsythia), var(--saffron))',
                     animation: bar.anim,
+                    transformOrigin: 'left',
                     position: 'relative',
                     overflow: 'hidden',
                   }}

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'NexusAI — AI-Powered Data Automation Platform',
     description: 'Deploy intelligent pipelines and automate complex data workflows.',
-    url: 'https://nexusai.vercel.app',
+    url: 'https://nexus-ai-pearl-six.vercel.app',
     siteName: 'NexusAI',
     type: 'website',
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Deploy intelligent pipelines, automate complex data workflows at any scale.',
   },
   alternates: {
-    canonical: 'https://nexusai.vercel.app',
+    canonical: 'https://nexus-ai-pearl-six.vercel.app',
   },
 }
 
@@ -41,7 +41,7 @@ const jsonLd = {
   applicationCategory: 'BusinessApplication',
   description:
     'AI-powered data automation platform. Deploy intelligent pipelines, automate complex data workflows, and scale your operations.',
-  url: 'https://nexusai.vercel.app',
+  url: 'https://nexus-ai-pearl-six.vercel.app',
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',

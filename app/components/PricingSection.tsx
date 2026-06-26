@@ -45,6 +45,8 @@ export default function PricingSection() {
   // billing toggle button refs
   const btnMonthlyRef = useRef<HTMLButtonElement>(null)
   const btnAnnualRef  = useRef<HTMLButtonElement>(null)
+  // Save 20% badge ref — shown/hidden via DOM, no re-render
+  const save20Ref = useRef<HTMLSpanElement>(null)
   // currency button refs
   const btnCurrencyRefs = useRef<Record<Currency, HTMLButtonElement | null>>({
     USD: null, INR: null, EUR: null,
@@ -80,6 +82,11 @@ export default function PricingSection() {
         Object.assign(btnAnnualRef.current.style,  active)
         Object.assign(btnMonthlyRef.current.style, inactive)
       }
+    }
+    // Show/hide Save 20% badge via DOM ref — zero re-render
+    if (save20Ref.current) {
+      save20Ref.current.style.opacity = val === 'annual' ? '1' : '0'
+      save20Ref.current.style.transform = val === 'annual' ? 'scale(1)' : 'scale(0.85)'
     }
     updateAllPrices()
   }
@@ -214,6 +221,27 @@ export default function PricingSection() {
               </span>
             </button>
           </div>
+
+          {/* Save 20% badge — DOM-ref controlled, zero re-render */}
+          <span
+            ref={save20Ref}
+            aria-live="polite"
+            style={{
+              fontFamily: 'var(--font-jetbrains)',
+              fontSize: 11,
+              color: 'var(--forsythia)',
+              background: 'rgba(255,200,1,0.15)',
+              padding: '4px 12px',
+              borderRadius: 9999,
+              letterSpacing: '0.08em',
+              opacity: 0,
+              transform: 'scale(0.85)',
+              transition: 'opacity 150ms ease-out, transform 150ms ease-out',
+              display: 'inline-block',
+            }}
+          >
+            Save 20%
+          </span>
 
           {/* Currency switcher */}
           <div style={{ display: 'inline-flex', gap: 6 }}>

@@ -58,14 +58,14 @@ body {
   50%       { opacity: 0.3; }
 }
 @keyframes packet-travel {
-  0%   { left: 0%;   opacity: 0; }
+  0%   { transform: translateY(-50%) translateX(0);    opacity: 0; }
   10%  { opacity: 1; }
   90%  { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  100% { transform: translateY(-50%) translateX(var(--connector-w, 200px)); opacity: 0; }
 }
-@keyframes bar-fill-1 { from { width: 45%; } to { width: 92%; } }
-@keyframes bar-fill-2 { from { width: 30%; } to { width: 78%; } }
-@keyframes bar-fill-3 { from { width: 60%; } to { width: 96%; } }
+@keyframes bar-fill-1 { from { transform: scaleX(0.45); } to { transform: scaleX(0.92); } }
+@keyframes bar-fill-2 { from { transform: scaleX(0.30); } to { transform: scaleX(0.78); } }
+@keyframes bar-fill-3 { from { transform: scaleX(0.60); } to { transform: scaleX(0.96); } }
 @keyframes dot-color {
   0%   { background: #FFC801; box-shadow: 0 0 10px #FFC801, 0 0 20px rgba(255,200,1,0.5); }
   30%  { background: #FF9932; box-shadow: 0 0 10px #FF9932, 0 0 20px rgba(255,153,50,0.5); }
