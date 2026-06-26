@@ -12,33 +12,54 @@ const WORDS = ['data', 'pipelines', 'signals', 'workflows', 'insights']
 export default function Hero() {
   const itemRefs = useRef<(HTMLElement | null)[]>([])
   const wordRef = useRef<HTMLSpanElement>(null)
+  const wrapperRef = useRef<HTMLSpanElement>(null)
   const wordIdx = useRef(0)
 
   useEffect(() => {
+    // Entry animations
     const delays = [0, 60, 120, 180, 240, 300]
     itemRefs.current.forEach((el, i) => {
       if (!el) return
       el.animate(
-        [
-          { opacity: '0', transform: 'translateY(16px)' },
-          { opacity: '1', transform: 'translateY(0)' },
-        ],
+        [{ opacity: '0', transform: 'translateY(16px)' }, { opacity: '1', transform: 'translateY(0)' }],
         { duration: 220, delay: delays[i] ?? 0, easing: 'ease-out', fill: 'forwards' }
       )
     })
 
-    // Cycle words via ref — no useState, no re-render
-    const tick = () => {
-      const el = wordRef.current
-      if (!el) return
-      el.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-10px)' }], { duration: 200, easing: 'ease-in', fill: 'forwards' })
-        .finished.then(() => {
-          wordIdx.current = (wordIdx.current + 1) % WORDS.length
-          el.textContent = WORDS[wordIdx.current]
-          el.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 220, easing: 'ease-out', fill: 'forwards' })
-        })
+    // Lock wrapper width to the longest word so H1 never reflows on word change
+    const el = wordRef.current
+    const wrapper = wrapperRef.current
+    if (el && wrapper) {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        const cs = getComputedStyle(el)
+        ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`
+        const maxW = Math.max(...WORDS.map(w => ctx.measureText(w).width))
+        wrapper.style.minWidth = `${Math.ceil(maxW)}px`
+      }
     }
-    const id = setInterval(tick, 2200)
+
+    // Word cycling — small Y translate + rAF gap between exit and entry
+    const tick = () => {
+      const word = wordRef.current
+      if (!word) return
+      word.animate(
+        [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-7px)' }],
+        { duration: 150, easing: 'ease-in', fill: 'forwards' }
+      ).finished.then(() => {
+        wordIdx.current = (wordIdx.current + 1) % WORDS.length
+        if (wordRef.current) wordRef.current.textContent = WORDS[wordIdx.current]
+        requestAnimationFrame(() => {
+          if (!wordRef.current) return
+          wordRef.current.animate(
+            [{ opacity: 0, transform: 'translateY(7px)' }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: 220, easing: 'ease-out', fill: 'forwards' }
+          )
+        })
+      })
+    }
+    const id = setInterval(tick, 2400)
     return () => clearInterval(id)
   }, [])
 
@@ -125,7 +146,9 @@ export default function Hero() {
           }}
         >
           Automate the{' '}
-          <span ref={wordRef} style={{ color: 'var(--forsythia)', display: 'inline-block' }}>data</span>
+          <span ref={wrapperRef} style={{ display: 'inline-block', textAlign: 'center', verticalAlign: 'bottom' }}>
+            <span ref={wordRef} style={{ color: 'var(--forsythia)', display: 'inline-block' }}>data</span>
+          </span>
           {' '}that runs your world.
         </h1>
 
