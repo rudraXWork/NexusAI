@@ -1,5 +1,7 @@
 # NexusAI — Next-Generation AI Data Automation Platform
 
+> 🌐 **Live Demo**: [nexus-ai-pearl-six.vercel.app](https://nexus-ai-pearl-six.vercel.app/)
+
 NexusAI is a high-fidelity, high-performance landing page demonstrating modern web design practices. The platform showcases interactive visualizers, real-time data orchestration pipelines, and advanced UI/UX components built with performance as a primary constraint.
 
 ---
