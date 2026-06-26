@@ -12,7 +12,6 @@ const WORDS = ['data', 'pipelines', 'signals', 'workflows', 'insights']
 export default function Hero() {
   const itemRefs = useRef<(HTMLElement | null)[]>([])
   const wordRef = useRef<HTMLSpanElement>(null)
-  const wrapperRef = useRef<HTMLSpanElement>(null)
   const wordIdx = useRef(0)
 
   useEffect(() => {
@@ -25,20 +24,6 @@ export default function Hero() {
         { duration: 220, delay: delays[i] ?? 0, easing: 'ease-out', fill: 'forwards' }
       )
     })
-
-    // Lock wrapper width to the longest word so H1 never reflows on word change
-    const el = wordRef.current
-    const wrapper = wrapperRef.current
-    if (el && wrapper) {
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        const cs = getComputedStyle(el)
-        ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`
-        const maxW = Math.max(...WORDS.map(w => ctx.measureText(w).width))
-        wrapper.style.minWidth = `${Math.ceil(maxW)}px`
-      }
-    }
 
     // Word cycling — small Y translate + rAF gap between exit and entry
     const tick = () => {
@@ -145,11 +130,9 @@ export default function Hero() {
             marginBottom: 24,
           }}
         >
-          Automate the{' '}
-          <span ref={wrapperRef} style={{ display: 'inline-block', textAlign: 'center', verticalAlign: 'bottom' }}>
-            <span ref={wordRef} style={{ color: 'var(--forsythia)', display: 'inline-block' }}>data</span>
-          </span>
-          {' '}that runs your world.
+          Automate the<br />
+          <span ref={wordRef} style={{ color: 'var(--forsythia)', display: 'inline-block' }}>data</span>
+          <br />that runs your world.
         </h1>
 
         {/* Subtext */}
