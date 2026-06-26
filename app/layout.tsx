@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             if (t === 'light') document.documentElement.dataset.theme = 'light';
           } catch(e) {}
         `}} />
-        {/* Light mode vars — kept here so Tailwind's pipeline never touches them */}
+        {/* Light mode + scroll-reveal — kept here so Tailwind never strips them */}
         <style dangerouslySetInnerHTML={{ __html: `
           [data-theme="light"] {
             --arctic:    #0B1922;
@@ -72,6 +72,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           [data-theme="light"] .nav-scrolled-bg {
             background: rgba(241,246,244,0.95) !important;
             border-bottom: 1px solid rgba(23,43,54,0.1) !important;
+          }
+
+          /* Scroll reveal — hide before paint so JS never causes a jerk */
+          main > section:not(:first-child),
+          main > div,
+          footer {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 600ms cubic-bezier(0.16,1,0.3,1),
+                        transform 600ms cubic-bezier(0.16,1,0.3,1);
+          }
+          .sr-visible {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            main > section:not(:first-child), main > div, footer {
+              opacity: 1; transform: none; transition: none;
+            }
           }
         `}} />
         <script
