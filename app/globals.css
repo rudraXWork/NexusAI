@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
+/* 1. CSS vars */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --arctic:    #F1F6F4;
+  --mint:      #D9E8E2;
+  --forsythia: #FFC801;
+  --saffron:   #FF9932;
+  --nocturnal: #114C5A;
+  --noir:      #172B36;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Navbar scrolled bg — theme-aware */
+.nav-scrolled-bg {
+  background: rgba(23,43,54,0.95) !important;
+  border-bottom: 1px solid rgba(241,246,244,0.06) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 2. Base */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--noir);
+  color: var(--arctic);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. @keyframes */
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseGlow {
+  0%,100% { filter: brightness(0) invert(1); }
+  50%      { filter: invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(1.2); }
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes packet-travel {
+  0%   { left: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+@keyframes bar-fill-1 { from { width: 45%; } to { width: 92%; } }
+@keyframes bar-fill-2 { from { width: 30%; } to { width: 78%; } }
+@keyframes bar-fill-3 { from { width: 60%; } to { width: 96%; } }
+@keyframes dot-color {
+  0%   { background: #FFC801; box-shadow: 0 0 10px #FFC801, 0 0 20px rgba(255,200,1,0.5); }
+  30%  { background: #FF9932; box-shadow: 0 0 10px #FF9932, 0 0 20px rgba(255,153,50,0.5); }
+  60%  { background: #D9E8E2; box-shadow: 0 0 10px #D9E8E2, 0 0 20px rgba(217,232,226,0.4); }
+  100% { background: #FFC801; box-shadow: 0 0 10px #FFC801, 0 0 20px rgba(255,200,1,0.5); }
+}
+@keyframes dash-move {
+  from { background-position: 0 0; }
+  to   { background-position: 28px 0; }
+}
+@keyframes menuItemIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 5. Utilities */
+.font-jetbrains { font-family: var(--font-jetbrains), monospace; }
+.font-inter     { font-family: var(--font-inter), system-ui, sans-serif; }
+.eyebrow {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--forsythia);
+  display: block;
+}
+
+/* 6. Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nocturnal); }
+::-webkit-scrollbar-thumb { background: var(--forsythia); border-radius: 3px; }
+
+/* 7. Dot grid utility */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(241,246,244,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* 8. Corner bracket pattern */
+.bracket-card { position: relative; }
+.bracket-card::before, .bracket-card::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+}
+.bracket-card::before {
+  top: 0; right: 0;
+  border-top: 1.5px solid rgba(255,200,1,0.3);
+  border-right: 1.5px solid rgba(255,200,1,0.3);
+}
+.bracket-card::after {
+  bottom: 0; left: 0;
+  border-bottom: 1.5px solid rgba(255,200,1,0.3);
+  border-left: 1.5px solid rgba(255,200,1,0.3);
+}
+
+/* 9. Selection */
+::selection { background: rgba(255,200,1,0.2); color: var(--arctic); }
+
+/* 10. Price transition */
+.price-value {
+  transition: opacity 120ms ease-out, transform 120ms ease-out;
+  display: inline-block;
 }
