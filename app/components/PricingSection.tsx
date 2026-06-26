@@ -193,24 +193,24 @@ export default function PricingSection() {
             <button
               ref={btnAnnualRef}
               onClick={() => setBilling('annual')}
-              style={{ ...pillBase, background: 'transparent', color: 'var(--mint)' }}
+              style={{ ...pillBase, background: 'transparent', color: 'var(--mint)', display: 'inline-flex', alignItems: 'center', gap: 6 }}
             >
               Annual
+              <span
+                style={{
+                  fontFamily: 'var(--font-jetbrains)',
+                  fontSize: 10,
+                  color: 'var(--forsythia)',
+                  background: 'rgba(255,200,1,0.15)',
+                  padding: '2px 7px',
+                  borderRadius: 9999,
+                  letterSpacing: '0.05em',
+                  lineHeight: 1.6,
+                }}
+              >
+                -20%
+              </span>
             </button>
-            <span
-              style={{
-                fontFamily: 'var(--font-jetbrains)',
-                fontSize: 11,
-                color: 'var(--forsythia)',
-                background: 'rgba(255,200,1,0.15)',
-                padding: '3px 10px',
-                borderRadius: 9999,
-                marginLeft: 4,
-                letterSpacing: '0.05em',
-              }}
-            >
-              Save 20%
-            </span>
           </div>
 
           {/* Currency switcher */}
