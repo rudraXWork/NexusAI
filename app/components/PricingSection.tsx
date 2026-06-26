@@ -200,12 +200,14 @@ export default function PricingSection() {
                 style={{
                   fontFamily: 'var(--font-jetbrains)',
                   fontSize: 10,
-                  color: 'var(--forsythia)',
-                  background: 'rgba(255,200,1,0.15)',
-                  padding: '2px 7px',
+                  color: 'inherit',
+                  background: 'transparent',
+                  border: '1px solid currentColor',
+                  padding: '1px 6px',
                   borderRadius: 9999,
                   letterSpacing: '0.05em',
                   lineHeight: 1.6,
+                  opacity: 0.8,
                 }}
               >
                 -20%
